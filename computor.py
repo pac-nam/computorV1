@@ -1,5 +1,6 @@
 #!/usr/bin/python
 import sys
+import lexer_parser
 
 def sqrt(nb):
 	low = float(1)
@@ -20,29 +21,6 @@ def sqrt(nb):
 			low = tmp
 	return high
 
-def reduce_expression(parameters):
-	elems = [0, 0, 0]
-	i = 0
-	neg = 1
-	while (i < len(parameters)):
-		if (parameters[i - 1] == "="):
-			neg = -1
-		degree = int(parameters[i + 2][2:])
-		if (degree != 0 and degree != 1 and degree != 2):
-			print("The polynomial degree '{0}' is invalid".format(degree))
-			exit()
-		multiplicator = float(parameters[i])
-		if (i > 0 and parameters[i - 1] == "-"):
-			multiplicator = -multiplicator
-		elems[degree] += multiplicator * neg
-		i += 4
-	if (elems[2] != 0):
-		print("Reduced form: {2} * X^2 + {1} * X + {0} = 0".format(elems[0], elems[1], elems[2]))
-	elif (elems[1] != 0):
-		print("Reduced form: {1} * X + {0} = 0".format(elems[0], elems[1]))
-	else:
-		print("Reduced form: {0} = 0".format(elems[0]))
-	return elems[::-1]
 
 def second_degree(e):
 	D = float(e[1] * e[1] - 4 * e[0] * e[2])
@@ -62,7 +40,15 @@ def main():
 	if (len(sys.argv) < 2):
 		print("Missing equation")
 		return
-	elems = reduce_expression(" ".join(sys.argv[1:]).split())
+	if (!(elems = lexer_parser(" ".join(sys.argv[1:]).split())))
+		print("parsing error")
+		return
+	if (elems[0] != 0):
+		print("Reduced form: {0} * X^2 + {1} * X + {2} = 0".format(elems[0], elems[1], elems[2]))
+	elif (elems[1] != 0):
+		print("Reduced form: {0} * X + {1} = 0".format(elems[1], elems[2]))
+	else:
+		print("Reduced form: {0} = 0".format(elems[2]))
 	if (elems[0] != 0):
 		print("Polynomial degree: 2")
 		second_degree(elems)
