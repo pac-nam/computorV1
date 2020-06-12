@@ -61,7 +61,9 @@ func discriminant(r polynom.S_poly) string {
 func printSolution(r polynom.S_poly) {
 	str := reducedForm(r.Elems, r.Degree)
 	str += "\nPolynomial degree" + fmt.Sprint(r.Degree)
-	str += discriminant(r)
+	if r.Degree == 2 {
+		str += discriminant(r)
+	}
 	fmt.Println(str)
 }
 
@@ -76,6 +78,5 @@ func main() {
 		return
 	}
 	result := polynom.Solve(poly)
-	//fmt.Println(result)
 	printSolution(result)
 }
