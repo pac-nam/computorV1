@@ -28,6 +28,8 @@ func parseX(expr string) (float64, int, string) {
 			index = 1
 		} else if expr[Xstart+2] == '2' {
 			index = 2
+		} else {
+			return 0, 0, "error with X power"
 		}
 	} else {
 		return 0, 0, "error with X power"

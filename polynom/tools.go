@@ -17,11 +17,12 @@ func	sqrt(number float64) float64 {
 		return 0
 	}
 	min, max := float64(0), number
+	// i := 0
 	for sqrtftoa(min) != sqrtftoa(max) {
-		//fmt.Println(min, max)
 		tmp := min + (max - min) / 2
 		tmps := sqrtftoa(tmp)
-		if tmps == sqrtftoa(min) || tmps == sqrtftoa(max) {
+		// fmt.Println(min, max, tmps, number)
+		if tmps == sqrtftoa(min) || tmps == sqrtftoa(max) || tmp * tmp == number {
 			return tmp
 		}
 		if tmp * tmp < number {
@@ -29,6 +30,10 @@ func	sqrt(number float64) float64 {
 		} else if tmp * tmp > number {
 			max = tmp
 		}
+		// i++
+		// if i > 10 {
+		// 	return 0
+		// }
 	}
 	return min
 }

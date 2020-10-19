@@ -4,11 +4,20 @@ import (
 	"strings"
 )
 
-func epurSpaces(args []string) string {
-	args = strings.Split(strings.Join(args, " "), " ")
+func epurSpaces(line string) string {
+	toChange := []string{"\r", "\v", "\t", "\f", "\n"}
+	for _, replace := range toChange {
+		line = strings.Replace(line, replace, " ", -1)
+	}
+	args := strings.Split(line, " ")
 	for i := 0; i < len(args); i++ {
-		for i < len(args) && args[i] == "" {
+		if args[i] == "" {
+			if i == len(args) - 1 {
+				args = args[:i]
+				break
+			}
 			args = append(args[:i], args[i+1:]...)
+			i--
 		}
 	}
 	return strings.Join(args, " ")
@@ -24,7 +33,7 @@ func validCharset(str string, charset string) bool {
 }
 
 func GetPolynom(args []string) ([3]float64, string) {
-	str := epurSpaces(args[1:])
+	str := strings.Join(args[1:], " ")
 	if !validCharset(str, "0123456789 .*+-=X^") {
 		return [3]float64{0, 0, 0}, "invalid character"
 	}
@@ -32,11 +41,11 @@ func GetPolynom(args []string) ([3]float64, string) {
 	if len(expression) != 2 {
 		return [3]float64{0, 0, 0}, "only one '=' is accepted"
 	}
-	left, err := halfExpression(expression[0])
+	left, err := halfExpression(epurSpaces(expression[0]))
 	if err != "" {
 		return [3]float64{0, 0, 0}, err
 	}
-	right, err := halfExpression(expression[1])
+	right, err := halfExpression(epurSpaces(expression[1]))
 	if err != "" {
 		return [3]float64{0, 0, 0}, err
 	}

@@ -60,9 +60,15 @@ func discriminant(r polynom.S_poly) string {
 
 func printSolution(r polynom.S_poly) {
 	str := reducedForm(r.Elems, r.Degree)
-	str += "\nPolynomial degree" + fmt.Sprint(r.Degree)
+	str += "\nPolynomial degree " + fmt.Sprint(r.Degree)
 	if r.Degree == 2 {
 		str += discriminant(r)
+	} else if r.Degree == 1 {
+		str += fmt.Sprint("\nthe solution is: X = ", r.Solutions[0].Real)
+	} else if r.Specific == 1 {
+		str += "\nimpossible expression"
+	} else if r.Specific == 2 {
+		str += "\nall real number work"
 	}
 	fmt.Println(str)
 }
@@ -72,11 +78,14 @@ func main() {
 		fmt.Println("Missing arguments\nUsage: " + os.Args[0] + " <expression>")
 		return
 	}
+	// fmt.Println("hello")
 	poly, error := parse.GetPolynom(os.Args)
 	if error != "" {
 		fmt.Println("ERROR: " + error)
 		return
 	}
+	// fmt.Println(poly)
 	result := polynom.Solve(poly)
+	// fmt.Println(result)
 	printSolution(result)
 }
