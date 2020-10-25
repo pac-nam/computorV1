@@ -2,6 +2,17 @@ package polynom
 
 // import "fmt"
 
+func cleanSolutions(poly *S_poly) {
+	for i := range poly.Solutions {
+		if poly.Solutions[i].Real == 0 {
+			poly.Solutions[i].Real = 0
+		}
+		if poly.Solutions[i].Imaginary == 0 {
+			poly.Solutions[i].Imaginary = 0
+		}
+	}
+}
+
 func Solve(elems [3]float64) S_poly {
 	poly := new(S_poly)
 	poly.Elems = elems
@@ -22,5 +33,6 @@ func Solve(elems [3]float64) S_poly {
 		// fmt.Println("degree 2")
 		degreeTwo(poly)
 	}
+	cleanSolutions(poly)
 	return *poly
 }

@@ -11,6 +11,12 @@ type S_solution struct {
 }
 
 func (solution S_solution) String() string {
+	// if solution.Imaginary == 0 {
+	// 	solution.Imaginary = 0
+	// }
+	// if solution.Real == 0 {
+	// 	solution.Real = 0
+	// }
 	return ftoa(solution.Imaginary) + "i + " +
 		ftoa(solution.Real)
 }

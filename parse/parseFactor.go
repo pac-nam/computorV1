@@ -17,6 +17,7 @@ func parseX(expr string) (float64, int, string) {
 			return 0, 0, err
 		}
 	}
+	// fmt.Println(multiplicator)
 	if Xstart+1 == len(expr) {
 		index = 1
 	} else if Xstart+3 == len(expr) {
@@ -73,7 +74,7 @@ func parseOnlymultiple(expr string, res [3]float64) ([3]float64, string) {
 			resNb *= tmp
 		}
 	}
-	res[resIndex] = resNb
+	res[resIndex] += resNb
 	return res, ""
 }
 

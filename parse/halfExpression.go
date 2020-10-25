@@ -58,7 +58,9 @@ func doubleSign(expr string) bool {
 
 func halfExpression(expr string) ([3]float64, string) {
 	res := [3]float64{0, 0, 0}
-	if missingSign(expr) {
+	if expr == "" {
+		return [3]float64{0, 0, 0}, "missing a part of the expression"
+	} else if missingSign(expr) {
 		return [3]float64{0, 0, 0}, "missing sign"
 	} else if invalidDot(expr) {
 		return [3]float64{0, 0, 0}, "invalid dot"
